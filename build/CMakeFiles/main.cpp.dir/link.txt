@@ -1,0 +1,1 @@
+/usr/bin/clang++ -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=12.7 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/main.cpp.dir/src/main.cpp.o CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o -o main.cpp
