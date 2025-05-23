@@ -1,3 +1,3 @@
-/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/build/CMakeFiles/main.cpp.dir
-/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/build/CMakeFiles/edit_cache.dir
-/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/build/CMakeFiles/rebuild_cache.dir
+/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build/CMakeFiles/main.cpp.dir
+/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build/CMakeFiles/edit_cache.dir
+/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build/CMakeFiles/rebuild_cache.dir

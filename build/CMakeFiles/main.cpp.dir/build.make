@@ -53,10 +53,10 @@ RM = /usr/local/Cellar/cmake/3.30.3/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu"
+CMAKE_SOURCE_DIR = "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/build"
+CMAKE_BINARY_DIR = "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build"
 
 # Include any dependencies generated for this target.
 include CMakeFiles/main.cpp.dir/depend.make
@@ -70,46 +70,62 @@ include CMakeFiles/main.cpp.dir/progress.make
 include CMakeFiles/main.cpp.dir/flags.make
 
 CMakeFiles/main.cpp.dir/src/main.cpp.o: CMakeFiles/main.cpp.dir/flags.make
-CMakeFiles/main.cpp.dir/src/main.cpp.o: /Users/iwen/Documents/COURS\ IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/src/main.cpp
+CMakeFiles/main.cpp.dir/src/main.cpp.o: /Users/remmane/Desktop/cours/S2/projet/prog\ -synt/DiamondC-OpenGl/src/main.cpp
 CMakeFiles/main.cpp.dir/src/main.cpp.o: CMakeFiles/main.cpp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/main.cpp.dir/src/main.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.cpp.dir/src/main.cpp.o -MF CMakeFiles/main.cpp.dir/src/main.cpp.o.d -o CMakeFiles/main.cpp.dir/src/main.cpp.o -c "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/src/main.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/main.cpp.dir/src/main.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.cpp.dir/src/main.cpp.o -MF CMakeFiles/main.cpp.dir/src/main.cpp.o.d -o CMakeFiles/main.cpp.dir/src/main.cpp.o -c "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/src/main.cpp"
 
 CMakeFiles/main.cpp.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main.cpp.dir/src/main.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/src/main.cpp" > CMakeFiles/main.cpp.dir/src/main.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/src/main.cpp" > CMakeFiles/main.cpp.dir/src/main.cpp.i
 
 CMakeFiles/main.cpp.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main.cpp.dir/src/main.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/src/main.cpp" -o CMakeFiles/main.cpp.dir/src/main.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/src/main.cpp" -o CMakeFiles/main.cpp.dir/src/main.cpp.s
 
 CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o: CMakeFiles/main.cpp.dir/flags.make
-CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o: /Users/iwen/Documents/COURS\ IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/src/MapGenerator.cpp
+CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o: /Users/remmane/Desktop/cours/S2/projet/prog\ -synt/DiamondC-OpenGl/src/MapGenerator.cpp
 CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o: CMakeFiles/main.cpp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o -MF CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o.d -o CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o -c "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/src/MapGenerator.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o -MF CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o.d -o CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o -c "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/src/MapGenerator.cpp"
 
 CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/src/MapGenerator.cpp" > CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/src/MapGenerator.cpp" > CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.i
 
 CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/src/MapGenerator.cpp" -o CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/src/MapGenerator.cpp" -o CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.s
+
+CMakeFiles/main.cpp.dir/src/Joueur.cpp.o: CMakeFiles/main.cpp.dir/flags.make
+CMakeFiles/main.cpp.dir/src/Joueur.cpp.o: /Users/remmane/Desktop/cours/S2/projet/prog\ -synt/DiamondC-OpenGl/src/Joueur.cpp
+CMakeFiles/main.cpp.dir/src/Joueur.cpp.o: CMakeFiles/main.cpp.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main.cpp.dir/src/Joueur.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.cpp.dir/src/Joueur.cpp.o -MF CMakeFiles/main.cpp.dir/src/Joueur.cpp.o.d -o CMakeFiles/main.cpp.dir/src/Joueur.cpp.o -c "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/src/Joueur.cpp"
+
+CMakeFiles/main.cpp.dir/src/Joueur.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main.cpp.dir/src/Joueur.cpp.i"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/src/Joueur.cpp" > CMakeFiles/main.cpp.dir/src/Joueur.cpp.i
+
+CMakeFiles/main.cpp.dir/src/Joueur.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main.cpp.dir/src/Joueur.cpp.s"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/src/Joueur.cpp" -o CMakeFiles/main.cpp.dir/src/Joueur.cpp.s
 
 # Object files for target main.cpp
 main_cpp_OBJECTS = \
 "CMakeFiles/main.cpp.dir/src/main.cpp.o" \
-"CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o"
+"CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o" \
+"CMakeFiles/main.cpp.dir/src/Joueur.cpp.o"
 
 # External object files for target main.cpp
 main_cpp_EXTERNAL_OBJECTS =
 
 main.cpp: CMakeFiles/main.cpp.dir/src/main.cpp.o
 main.cpp: CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o
+main.cpp: CMakeFiles/main.cpp.dir/src/Joueur.cpp.o
 main.cpp: CMakeFiles/main.cpp.dir/build.make
 main.cpp: CMakeFiles/main.cpp.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable main.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable main.cpp"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/main.cpp.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -121,6 +137,6 @@ CMakeFiles/main.cpp.dir/clean:
 .PHONY : CMakeFiles/main.cpp.dir/clean
 
 CMakeFiles/main.cpp.dir/depend:
-	cd "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu" "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu" "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/build" "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/build" "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/build/CMakeFiles/main.cpp.dir/DependInfo.cmake" "--color=$(COLOR)"
+	cd "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl" "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl" "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build" "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build" "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build/CMakeFiles/main.cpp.dir/DependInfo.cmake" "--color=$(COLOR)"
 .PHONY : CMakeFiles/main.cpp.dir/depend
 

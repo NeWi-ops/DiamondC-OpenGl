@@ -57,10 +57,10 @@ RM = /usr/local/Cellar/cmake/3.30.3/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu"
+CMAKE_SOURCE_DIR = "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/build"
+CMAKE_BINARY_DIR = "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/build/CMakeFiles" "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/build//CMakeFiles/progress.marks"
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build/CMakeFiles" "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build//CMakeFiles/progress.marks"
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/build/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build/CMakeFiles" 0
 .PHONY : all
 
 # The main clean target
@@ -128,6 +128,30 @@ main.cpp: cmake_check_build_system
 main.cpp/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/build
 .PHONY : main.cpp/fast
+
+src/Joueur.o: src/Joueur.cpp.o
+.PHONY : src/Joueur.o
+
+# target to build an object file
+src/Joueur.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/src/Joueur.cpp.o
+.PHONY : src/Joueur.cpp.o
+
+src/Joueur.i: src/Joueur.cpp.i
+.PHONY : src/Joueur.i
+
+# target to preprocess a source file
+src/Joueur.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/src/Joueur.cpp.i
+.PHONY : src/Joueur.cpp.i
+
+src/Joueur.s: src/Joueur.cpp.s
+.PHONY : src/Joueur.s
+
+# target to generate assembly for a file
+src/Joueur.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/src/Joueur.cpp.s
+.PHONY : src/Joueur.cpp.s
 
 src/MapGenerator.o: src/MapGenerator.cpp.o
 .PHONY : src/MapGenerator.o
@@ -186,6 +210,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... main.cpp"
+	@echo "... src/Joueur.o"
+	@echo "... src/Joueur.i"
+	@echo "... src/Joueur.s"
 	@echo "... src/MapGenerator.o"
 	@echo "... src/MapGenerator.i"
 	@echo "... src/MapGenerator.s"

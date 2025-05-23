@@ -1,4 +1,4 @@
-# Install script for directory: /Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu
+# Install script for directory: /Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -52,6 +52,6 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-  file(WRITE "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/build/${CMAKE_INSTALL_MANIFEST}"
+  file(WRITE "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

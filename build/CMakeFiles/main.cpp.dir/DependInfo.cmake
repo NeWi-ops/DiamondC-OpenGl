@@ -8,8 +8,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/src/MapGenerator.cpp" "CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o" "gcc" "CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o.d"
-  "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/src/main.cpp" "CMakeFiles/main.cpp.dir/src/main.cpp.o" "gcc" "CMakeFiles/main.cpp.dir/src/main.cpp.o.d"
+  "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/src/Joueur.cpp" "CMakeFiles/main.cpp.dir/src/Joueur.cpp.o" "gcc" "CMakeFiles/main.cpp.dir/src/Joueur.cpp.o.d"
+  "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/src/MapGenerator.cpp" "CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o" "gcc" "CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o.d"
+  "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/src/main.cpp" "CMakeFiles/main.cpp.dir/src/main.cpp.o" "gcc" "CMakeFiles/main.cpp.dir/src/main.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

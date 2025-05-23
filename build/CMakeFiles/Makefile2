@@ -54,10 +54,10 @@ RM = /usr/local/Cellar/cmake/3.30.3/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu"
+CMAKE_SOURCE_DIR = "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/build"
+CMAKE_BINARY_DIR = "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build"
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -81,14 +81,14 @@ clean: CMakeFiles/main.cpp.dir/clean
 CMakeFiles/main.cpp.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/build/CMakeFiles" --progress-num=1,2,3 "Built target main.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build/CMakeFiles" --progress-num=1,2,3,4 "Built target main.cpp"
 .PHONY : CMakeFiles/main.cpp.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/main.cpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/build/CMakeFiles" 3
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build/CMakeFiles" 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/main.cpp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/build/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build/CMakeFiles" 0
 .PHONY : CMakeFiles/main.cpp.dir/rule
 
 # Convenience name for target.

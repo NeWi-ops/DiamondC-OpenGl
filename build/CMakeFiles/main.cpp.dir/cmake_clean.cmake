@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/main.cpp.dir/src/Joueur.cpp.o"
+  "CMakeFiles/main.cpp.dir/src/Joueur.cpp.o.d"
   "CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o"
   "CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o.d"
   "CMakeFiles/main.cpp.dir/src/main.cpp.o"

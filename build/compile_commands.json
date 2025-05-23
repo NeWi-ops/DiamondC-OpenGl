@@ -1,14 +1,20 @@
 [
 {
-  "directory": "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/build",
-  "command": "/usr/bin/clang++  -I\"/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/src\" -g -std=gnu++11 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=12.7 -o CMakeFiles/main.cpp.dir/src/main.cpp.o -c \"/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/src/main.cpp\"",
-  "file": "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/src/main.cpp",
+  "directory": "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build",
+  "command": "/usr/bin/clang++  -I\"/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/src\" -g -std=gnu++11 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -o CMakeFiles/main.cpp.dir/src/main.cpp.o -c \"/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/src/main.cpp\"",
+  "file": "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/src/main.cpp",
   "output": "CMakeFiles/main.cpp.dir/src/main.cpp.o"
 },
 {
-  "directory": "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/build",
-  "command": "/usr/bin/clang++  -I\"/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/src\" -g -std=gnu++11 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=12.7 -o CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o -c \"/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/src/MapGenerator.cpp\"",
-  "file": "/Users/iwen/Documents/COURS IMAC/PROG-ALGO/S2/Diamond-digger/LeJeu/src/MapGenerator.cpp",
+  "directory": "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build",
+  "command": "/usr/bin/clang++  -I\"/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/src\" -g -std=gnu++11 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -o CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o -c \"/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/src/MapGenerator.cpp\"",
+  "file": "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/src/MapGenerator.cpp",
   "output": "CMakeFiles/main.cpp.dir/src/MapGenerator.cpp.o"
+},
+{
+  "directory": "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/build",
+  "command": "/usr/bin/clang++  -I\"/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/src\" -g -std=gnu++11 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -o CMakeFiles/main.cpp.dir/src/Joueur.cpp.o -c \"/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/src/Joueur.cpp\"",
+  "file": "/Users/remmane/Desktop/cours/S2/projet/prog -synt/DiamondC-OpenGl/src/Joueur.cpp",
+  "output": "CMakeFiles/main.cpp.dir/src/Joueur.cpp.o"
 }
 ]
