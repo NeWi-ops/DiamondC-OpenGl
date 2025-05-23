@@ -8,6 +8,8 @@ Avec les librairie <termios>,<unustd> et <stdio> on a reussi à avoir un mouveme
 il faut utiliser _getch() de <conio.h>.
 
 
+GROSSS probleme avec FORK, les git et tt sont emmeler, un grand bug 
+
 Puis on mettra en place l'algorithme de "Dijkstra"  pour l'attaque des ennemis.
 ----> Amelioration à mettre en place: les ennemis bougent aléatoirement, il utilise l'algorithme pour attaquer que quand la distance qui leur sépare du joueur est < à 15.
 
