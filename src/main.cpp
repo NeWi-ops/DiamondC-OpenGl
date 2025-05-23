@@ -44,6 +44,8 @@ int main() {
         if (direction == 'a') {break;}
         J.deplacer(direction,map);
         map.afficherCarte();
+        // J.destruction(map);
+        // map.afficherCarte();
     }
 
     return 0;

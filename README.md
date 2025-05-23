@@ -13,3 +13,12 @@ GROSSS probleme avec FORK, les git et tt sont emmeler, un grand bug
 Puis on mettra en place l'algorithme de "Dijkstra"  pour l'attaque des ennemis.
 ----> Amelioration à mettre en place: les ennemis bougent aléatoirement, il utilise l'algorithme pour attaquer que quand la distance qui leur sépare du joueur est < à 15.
 
+
+
+
+IDEE THEME:
+theme: sous la mer
+obstacle: dune, ile... fausses, bateaux...
+ennemis: requins
+gemmes: piece d'or / trésor...
+joueur: plongeur (+: niveau d'O2 qui baisse)
