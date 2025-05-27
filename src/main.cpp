@@ -1,6 +1,24 @@
 #include "MapGenerator.hpp"
 #include "Joueur.hpp"
 #include <iostream>
+#include <stdio.h>
+#include <unistd.h>
+#include <termios.h>
+
+
+// Fonction pour lire un caractère sans attendre Entrée / CA NE MARCHE QUE POUR MAC/LINUX
+//Pour Windows, il faudrait utiliser _getch() de <conio.h>.
+char getch() {
+    struct termios oldt, newt;
+    char ch;
+    tcgetattr(STDIN_FILENO, &oldt);
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+    ch = getchar();
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    return ch;
+}
 
 int main() {
     // Créer une carte de taille 50x50
@@ -15,17 +33,19 @@ int main() {
     // Créer un joueur
     Joueur J;
 
-    //Deplacement du joueur
-    char direction;
-    while (true) {
-        std::cout << "Entrez une direction (z/s/q/d) ou 'a' pour quitter: ";
-        std::cin >> direction;
+    std::cout << "Entrez une direction (z/s/q/d) ou 'a' pour quitter: ";
 
-        if (direction == 'a') {
-            break;
-        }
+    
+    while (true) {
+        //std::cout << "Entrez une direction (z/s/q/d) ou 'a' pour quitter: ";
+        //std::cin >> direction;
+
+        char direction{getch()};
+        if (direction == 'a') {break;}
         J.deplacer(direction,map);
         map.afficherCarte();
+        // J.destruction(map);
+        // map.afficherCarte();
     }
 
     return 0;

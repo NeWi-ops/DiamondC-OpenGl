@@ -7,6 +7,6 @@ class Joueur{
 public:
     Joueur();
     bool deplacer(char direction, MapGenerator& map);
-
+    void destruction(MapGenerator& map);
     
 };
