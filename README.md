@@ -7,6 +7,10 @@ Les mouvement du joueur sont pour l'instant non fluide et demande à chaque fois
 Avec les librairie <termios>,<unustd> et <stdio> on a reussi à avoir un mouvement du joueuer qui ne necessite pas d'appuyer à chaque fois sur entrer. Le seul soucis, c'est que ces bibliotheque ne marche que pour mac/linux. Pour le windows, il faut:
 il faut utiliser _getch() de <conio.h>.
 
+On a mis en place les fins de jeu en fonction de l'etat du jeu:
+Victoire :  si le nombre de gemme total est collecter
+Defete : si le niveau de vie est nulle
+
 
 GROSSS probleme avec FORK, les git et tt sont emmeler, un grand bug 
 

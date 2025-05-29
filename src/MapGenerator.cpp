@@ -1,4 +1,5 @@
 #include "MapGenerator.hpp"
+#include "Joueur.hpp"
 #include <iostream>
 #include <vector>
 #include <cstdlib>
@@ -93,6 +94,9 @@ void MapGenerator::placerElements(int nb, int valeur) {
         int y = pos.second;
         m_carte[y][x] = valeur;
         ++compteur;
+        if(valeur == 4) { // Si c'est un ennemi, on stocke sa position
+            m_positionEnnemis.push_back({x, y});
+        }
     }
 }
 
