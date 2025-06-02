@@ -1,0 +1,6 @@
+[submodule "tooling"]
+	path = tooling
+	url = https://github.com/CoolLibs/tooling
+[submodule "lib/expected"]
+	path = lib/expected
+	url = https://github.com/TartanLlama/expected
