@@ -1,5 +1,4 @@
 #include "MapGenerator.hpp"
-#include "Joueur.hpp"
 #include <iostream>
 #include <vector>
 #include <cstdlib>
@@ -19,6 +18,7 @@ std::pair<int, int>& MapGenerator::getPositionJoueur() { return m_positionJoueur
 std::vector<std::vector<int>>& MapGenerator::getCarte() { return m_carte; }
 int MapGenerator::getLargeur() const { return m_largeur; }
 int MapGenerator::getHauteur() const { return m_hauteur; }
+std::vector<std::pair<int, int>>& MapGenerator::getPositionEnnemis() {return m_positionEnnemis;}
 
 void MapGenerator::genererCarte() {
     std::srand(static_cast<unsigned int>(std::time(0)));
@@ -158,4 +158,60 @@ void MapGenerator::afficherCarte() const {
         return true;
     }
     
+    void MapGenerator::deplacerEnnemis(const std::vector<std::vector<int>>& flow_field) {
+    for (auto& pos : m_positionEnnemis) {
+        int x = pos.first;
+        int y = pos.second;
+        int minDist = flow_field[y][x];
+        int bestX = x, bestY = y;
+        for (int dx : {-1, 0, 1}) {
+            for (int dy : {-1, 0, 1}) {
+                if (abs(dx) + abs(dy) != 1) continue;
+                int nx = x + dx, ny = y + dy;
+                if (nx >= 0 && nx < m_largeur && ny >= 0 && ny < m_hauteur) {
+                    if (flow_field[ny][nx] != -1 && flow_field[ny][nx] < minDist && m_carte[ny][nx] == 0) {
+                        minDist = flow_field[ny][nx];
+                        bestX = nx;
+                        bestY = ny;
+                    }
+                }
+            }
+        }
+        // Met à jour la carte et la position
+        m_carte[y][x] = 0;
+        m_carte[bestY][bestX] = 4;
+        pos = {bestX, bestY};
+        }
+    }
+
+    std::vector<std::vector<int>> MapGenerator::generer_le_flow_field() {
+    auto& pos = m_positionJoueur;
+    int joueurX = pos.first;
+    int joueurY = pos.second;
+    int largeur = this->getLargeur();
+    int hauteur = this->getHauteur();
+    auto& carte = this->getCarte();
+
+    std::vector<std::vector<int>> distance(hauteur, std::vector<int>(largeur, -1));
+    std::queue<std::pair<int, int>> q;
+    q.push({joueurX, joueurY});
+    distance[joueurY][joueurX] = 0;
+
+    while (!q.empty()) {
+        auto [x, y] = q.front(); q.pop();
+        for (int dx : {-1, 0, 1}) {
+            for (int dy : {-1, 0, 1}) {
+                if (abs(dx) + abs(dy) != 1) continue; // 4 directions
+                int nx = x + dx, ny = y + dy;
+                if (nx >= 0 && nx < largeur && ny >= 0 && ny < hauteur) {
+                    if (carte[ny][nx] != 1 && distance[ny][nx] == -1) { // pas un mur
+                        distance[ny][nx] = distance[y][x] + 1;
+                        q.push({nx, ny});
+                    }
+                }
+            }
+        }
+    }
+    return distance;
+}
 

@@ -1,9 +1,11 @@
 #include "MapGenerator.hpp"
 #include "Joueur.hpp"
+#include "Enemis.hpp"
 #include <iostream>
 #include <stdio.h>
 #include <unistd.h>
 #include <termios.h>
+//#include <img/img.h>
 
 
 // Fonction pour lire un caractère sans attendre Entrée / CA NE MARCHE QUE POUR MAC/LINUX
@@ -39,10 +41,13 @@ int main() {
     while (true) {
         //std::cout << "Entrez une direction (z/s/q/d) ou 'a' pour quitter: ";
         //std::cin >> direction;
-
+        map.deplacerEnnemis(map.generer_le_flow_field());
+        
         char direction{getch()};
         if (direction == 'a' || J.finduJeu()==1 || J.finduJeu()==2) {break;}
+        
         J.deplacer(direction,map);
+        
         map.afficherCarte();
         // J.destruction(map);
         // map.afficherCarte();

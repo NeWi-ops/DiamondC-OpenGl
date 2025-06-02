@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 #include <utility>
+#include <queue>
+//#include "Joueur.hpp"
 
 class MapGenerator {
 public:
@@ -12,7 +14,9 @@ public:
     std::vector<std::vector<int>>& getCarte();
     int getLargeur() const;
     int getHauteur() const;
-
+    std::vector<std::pair<int, int>>& getPositionEnnemis();
+    void deplacerEnnemis(const std::vector<std::vector<int>>& flow_field);
+    std::vector<std::vector<int>> generer_le_flow_field();
 
 
 private:
@@ -27,5 +31,6 @@ private:
     void placerElements(int nb, int valeur);
     void trouverPointDeDepartJoueur();
     bool estAssezLoinDesEnnemis(int x, int y, int distanceMin) const;
+    
 };
 
