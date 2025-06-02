@@ -20,6 +20,7 @@ private:
     int m_hauteur;
     std::vector<std::vector<int> > m_carte;
     std::pair<int, int> m_positionJoueur;
+    std::vector<std::pair<int, int> > m_positionEnnemis;
 
     void appliquerReglesAutomate();
     std::vector<std::pair<int, int> > trouverCasesVides() const;

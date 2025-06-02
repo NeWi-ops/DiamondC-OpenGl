@@ -41,7 +41,7 @@ int main() {
         //std::cin >> direction;
 
         char direction{getch()};
-        if (direction == 'a') {break;}
+        if (direction == 'a' || J.finduJeu()==1 || J.finduJeu()==2) {break;}
         J.deplacer(direction,map);
         map.afficherCarte();
         // J.destruction(map);
