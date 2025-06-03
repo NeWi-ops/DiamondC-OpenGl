@@ -2,7 +2,8 @@
 #include <vector>
 #include <utility>
 #include <queue>
-//#include "Joueur.hpp"
+// #include "Joueur.hpp"
+class Joueur; // Forward declaration pour éviter les dépendances circulaires
 
 class MapGenerator {
 public:
@@ -15,7 +16,7 @@ public:
     int getLargeur() const;
     int getHauteur() const;
     std::vector<std::pair<int, int>>& getPositionEnnemis();
-    void deplacerEnnemis(const std::vector<std::vector<int>>& flow_field);
+    void deplacerEnnemis(const std::vector<std::vector<int>>& flow_field, Joueur& joueur);
     std::vector<std::vector<int>> generer_le_flow_field();
 
 
