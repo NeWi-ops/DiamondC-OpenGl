@@ -16,7 +16,8 @@ MapGenerator::MapGenerator(int largeur, int hauteur)
 }
 
 std::pair<int, int>& MapGenerator::getPositionJoueur() { return m_positionJoueur; }
-std::vector<std::vector<int>>& MapGenerator::getCarte() { return m_carte; }
+const std::vector<std::vector<int>>& MapGenerator::getCarte() const { return m_carte; }
+std::vector<std::vector<int>>& MapGenerator::getCarte() {return m_carte;}
 int MapGenerator::getLargeur() const { return m_largeur; }
 int MapGenerator::getHauteur() const { return m_hauteur; }
 std::vector<std::pair<int, int>>& MapGenerator::getPositionEnnemis() {return m_positionEnnemis;}

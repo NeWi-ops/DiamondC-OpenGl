@@ -12,6 +12,7 @@ public:
     void afficherCarte() const;
 
     std::pair<int, int>& getPositionJoueur();
+    const std::vector<std::vector<int>>& getCarte() const;
     std::vector<std::vector<int>>& getCarte();
     int getLargeur() const;
     int getHauteur() const;

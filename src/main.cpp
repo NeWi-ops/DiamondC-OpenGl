@@ -1,85 +1,194 @@
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include "MapGenerator.hpp"
-#include "Joueur.hpp"
-#include "Enemis.hpp"
 #include <iostream>
-#include <stdio.h>
-#include <unistd.h>
-#include <termios.h>
-//#include <sys/select.h>
-//#include <img/img.h>
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+//#include "tools/texture.hpp"
 
 
-// Fonction pour lire un caractère sans attendre Entrée / CA NE MARCHE QUE POUR MAC/LINUX
-//Pour Windows, il faudrait utiliser _getch() de <conio.h>.
-char getch() {
-    struct termios oldt, newt;
-    char ch;
-    tcgetattr(STDIN_FILENO, &oldt);
-    newt = oldt;
-    newt.c_lflag &= ~(ICANON | ECHO);
-    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-    ch = getchar();
-    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-    return ch;
+const int WINDOW_WIDTH = 800;
+const int WINDOW_HEIGHT = 800;
+
+// void drawCarte(const MapGenerator& map) {
+//     auto& carte = map.getCarte();
+//     int largeur = map.getLargeur();
+//     int hauteur = map.getHauteur();
+
+//     float cellWidth = 2.0f / largeur;
+//     float cellHeight = 2.0f / hauteur;
+
+//     for (int y = 0; y < hauteur; ++y) {
+//         for (int x = 0; x < largeur; ++x) {
+//             int val = carte[y][x];
+
+//             // Choisis une couleur selon la valeur de la case
+//             if (val == 1) glColor3f(0.2f, 0.2f, 0.2f); // mur
+//             else if (val == 4) glColor3f(1.0f, 0.0f, 0.0f); // ennemi
+//             else if (val == 3) glColor3f(1.0f, 1.0f, 0.0f); // gemme
+//             else if (val == 2) glColor3f(0.0f, 0.0f, 1.0f); // joueur
+//             else glColor3f(0.9f, 0.9f, 0.9f); // vide
+
+//             float xpos = -1.0f + x * cellWidth;
+//             float ypos = -1.0f + y * cellHeight;
+
+//             glBegin(GL_QUADS);
+//             glVertex2f(xpos, ypos);
+//             glVertex2f(xpos + cellWidth, ypos);
+//             glVertex2f(xpos + cellWidth, ypos + cellHeight);
+//             glVertex2f(xpos, ypos + cellHeight);
+//             glEnd();
+//         }
+//     }
+// }
+
+// Charge une image et crée une texture OpenGL
+GLuint chargerTexture(const char* filename) {
+    int width, height, channels;
+    unsigned char* data = stbi_load(filename, &width, &height, &channels, 4);
+    if (!data) {
+        std::cerr << "Erreur chargement image : " << filename << std::endl;
+        return 0;
+    }
+    GLuint texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    stbi_image_free(data);
+    return texture;
+}
+
+void drawCaseTexture(float xpos, float ypos, float cellWidth, float cellHeight, GLuint texture) {
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glColor3f(1,1,1); // pour ne pas teinter la texture
+    glBegin(GL_QUADS);
+    glTexCoord2f(0,0); glVertex2f(xpos, ypos);
+    glTexCoord2f(1,0); glVertex2f(xpos + cellWidth, ypos);
+    glTexCoord2f(1,1); glVertex2f(xpos + cellWidth, ypos + cellHeight);
+    glTexCoord2f(0,1); glVertex2f(xpos, ypos + cellHeight);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+}
+
+void drawCarte(const MapGenerator& map, GLuint tex_mur, GLuint tex_vide, GLuint tex_gemme, GLuint tex_ennemi) {
+    auto& carte = map.getCarte();
+    int largeur = map.getLargeur();
+    int hauteur = map.getHauteur();
+
+    float cellWidth = 2.0f / largeur;
+    float cellHeight = 2.0f / hauteur;
+
+    for (int y = 0; y < hauteur; ++y) {
+        for (int x = 0; x < largeur; ++x) {
+            int val = carte[y][x];
+
+            float xpos = -1.0f + x * cellWidth;
+            float ypos = -1.0f + y * cellHeight;
+
+            // Cases vides (blanc) ou murs (noir)
+            // if (val == 1) glColor3f(0.0f, 0.0f, 0.0f); // mur noir
+            // else glColor3f(1.0f, 1.0f, 1.0f); // vide blanc
+
+            // glBegin(GL_QUADS);
+            // glVertex2f(xpos, ypos);
+            // glVertex2f(xpos + cellWidth, ypos);
+            // glVertex2f(xpos + cellWidth, ypos + cellHeight);
+            // glVertex2f(xpos, ypos + cellHeight);
+            // glEnd();
+
+            // // piège (petit carré bleu)
+            // if (val == 2) {
+            //     glColor3f(0.0f, 0.0f, 1.0f);
+            //     float margin = 0.2f;
+            //     glBegin(GL_QUADS);
+            //     glVertex2f(xpos + cellWidth * margin, ypos + cellHeight * margin);
+            //     glVertex2f(xpos + cellWidth * (1 - margin), ypos + cellHeight * margin);
+            //     glVertex2f(xpos + cellWidth * (1 - margin), ypos + cellHeight * (1 - margin));
+            //     glVertex2f(xpos + cellWidth * margin, ypos + cellHeight * (1 - margin));
+            //     glEnd();
+            // }
+
+            // // Ennemi (petit carré rouge)
+            // if (val == 4) {
+            //     glColor3f(1.0f, 0.0f, 0.0f);
+            //     float margin = 0.2f;
+            //     glBegin(GL_QUADS);
+            //     glVertex2f(xpos + cellWidth * margin, ypos + cellHeight * margin);
+            //     glVertex2f(xpos + cellWidth * (1 - margin), ypos + cellHeight * margin);
+            //     glVertex2f(xpos + cellWidth * (1 - margin), ypos + cellHeight * (1 - margin));
+            //     glVertex2f(xpos + cellWidth * margin, ypos + cellHeight * (1 - margin));
+            //     glEnd();
+            // }
+            // if (val == 3) { // Gemme (petit carré jaune)
+            //     glColor3f(1.0f, 1.0f, 0.0f);
+            //     float margin = 0.2f;
+            //     glBegin(GL_QUADS);
+            //     glVertex2f(xpos + cellWidth * margin, ypos + cellHeight * margin);
+            //     glVertex2f(xpos + cellWidth * (1 - margin), ypos + cellHeight * margin);
+            //     glVertex2f(xpos + cellWidth * (1 - margin), ypos + cellHeight * (1 - margin));
+            //     glVertex2f(xpos + cellWidth * margin, ypos + cellHeight * (1 - margin));
+            //     glEnd();
+            // }
+            if (val == 1) drawCaseTexture(xpos, ypos, cellWidth, cellHeight, tex_mur);
+            else if (val == 3) {
+                float margin = 0.2;
+                drawCaseTexture(xpos + cellWidth * margin,
+                    ypos + cellHeight * margin,
+                    cellWidth * (1 - 2 * margin),
+                    cellHeight * (1 - 2 * margin),
+                    tex_gemme);
+            }
+            else if (val == 4) {
+                float margin = 0.2;
+                drawCaseTexture(xpos + cellWidth * margin,
+                    ypos + cellHeight * margin,
+                    cellWidth * (1 - 2 * margin),
+                    cellHeight * (1 - 2 * margin),
+                    tex_ennemi);
+            }
+            else drawCaseTexture(xpos, ypos, cellWidth, cellHeight, tex_vide);
+        }
+    }
 }
 
 int main() {
-    // Créer une carte de taille 50x50
-    MapGenerator map(50, 50);
-
-    // Générer la carte
-    map.genererCarte();
-
-    // Afficher la carte
-    map.afficherCarte();
-
-    // Créer un joueur
-    Joueur J;
-
-    std::cout << "Entrez une direction (z/s/q/d) ou 'a' pour quitter: ";
+    if (!glfwInit()) return -1;
 
     
-    while (true) {
-        //std::cout << "Entrez une direction (z/s/q/d) ou 'a' pour quitter: ";
-        //std::cin >> direction;
-        map.deplacerEnnemis(map.generer_le_flow_field(), J);
-        
-        char direction{getch()};
-        if (direction == 'a' || J.finduJeu()==1 || J.finduJeu()==2) {break;}
-        
-        J.deplacer(direction,map);
-        
-        map.afficherCarte();
-        // J.destruction(map);
-        // map.afficherCarte();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+    // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    // #ifdef __APPLE__
+    // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    // #endif
+
+    GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Carte OpenGL", NULL, NULL);
+    if (!window) { glfwTerminate(); return -1; }
+    glfwMakeContextCurrent(window);
+    gladLoadGL();
+
+    stbi_set_flip_vertically_on_load(1); // pour que les images soient orientées correctement
+
+    GLuint tex_mur = chargerTexture("../images/mur/mur.png");
+    GLuint tex_vide = chargerTexture("../images/vide/vide.png");
+    GLuint tex_gemme = chargerTexture("../images/gemme/gemme.png");
+    GLuint tex_ennemi = chargerTexture("../images/ennemi/ennemi.png");
+
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // fond blanc
+    MapGenerator map(20, 20); // plus petit pour la démo graphique
+    map.genererCarte();
+    
+
+    while (!glfwWindowShouldClose(window)) {
+        glClear(GL_COLOR_BUFFER_BIT);
+        drawCarte(map, tex_mur, tex_vide, tex_gemme, tex_ennemi);
+        glfwSwapBuffers(window);
+        glfwPollEvents();
     }
-    // while (true) {
-    // // Déplacement automatique des ennemis
-    // map.deplacerEnnemis(map.generer_le_flow_field());
-    // map.afficherCarte();
-
-    // // Attendre une touche ou passer automatiquement après un délai
-    // usleep(200000); // 200 ms, ajuste si besoin
-
-    // // Vérifie si une touche est pressée (lecture non bloquante)
-    // fd_set set;
-    // struct timeval timeout;
-    // FD_ZERO(&set);
-    // FD_SET(STDIN_FILENO, &set);
-    // timeout.tv_sec = 0;
-    // timeout.tv_usec = 0;
-    // int rv = select(STDIN_FILENO + 1, &set, NULL, NULL, &timeout);
-
-    // if (rv > 0) {
-    //     char direction = getch();
-    //     if (direction == 'a' || J.finduJeu() == 1 || J.finduJeu() == 2) break;
-    //     J.deplacer(direction, map);
-    // }
-
-    // if (J.finduJeu() == 1 || J.finduJeu() == 2) break;
-    // }
-
+    glfwDestroyWindow(window);
+    glfwTerminate();
     return 0;
 }
-
-
