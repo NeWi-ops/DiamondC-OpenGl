@@ -1,90 +1,53 @@
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include "MapGenerator.hpp"
-#include "Joueur.hpp"
-#include <iostream>
-#include <stdio.h>
-#include <unistd.h>
-#include <termios.h>
-#include "lib/glbasimac/glfw/include/GLFW/glfw3.h"
+// #include <iostream>
+// #define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+//#include "tools/texture.hpp"
+#include "draw.hpp"
 
 
-// Fonction pour lire un caractère sans attendre Entrée / CA NE MARCHE QUE POUR MAC/LINUX
-//Pour Windows, il faudrait utiliser _getch() de <conio.h>.
-char getch() {
-    struct termios oldt, newt;
-    char ch;
-    tcgetattr(STDIN_FILENO, &oldt);
-    newt = oldt;
-    newt.c_lflag &= ~(ICANON | ECHO);
-    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-    ch = getchar();
-    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-    return ch;
-}
+const int WINDOW_WIDTH = 800;
+const int WINDOW_HEIGHT = 800;
+
 
 int main() {
-
-// Set an error callback to display glfw errors
-    glfwSetErrorCallback([](int error, const char* description) {
-        std::cerr << "Error " << error << ": " << description << std::endl;
-    });
-
-    // Initialize glfw
-    if (!glfwInit()) {
-        return -1;
-    }
-
-    // Create window
-    GLFWwindow* window { glfwCreateWindow(1280, 720, "Window", nullptr, nullptr) };
-    if (!window) {
-        std::cerr << "Failed to create window" << std::endl;
-        glfwTerminate();
-        return -1;
-    }
-
-    // Make the window's context current
-    glfwMakeContextCurrent(window);
-
-    // Intialize glad (loads the OpenGL functions)
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        std::cerr << "Failed to initialize OpenGL context" << std::endl;
-        glfwTerminate();
-        return -1;
-    }
-
-    // Créer une carte de taille 50x50
-    MapGenerator map(50, 50);
-
-    // Générer la carte
-    map.genererCarte();
-
-    // Afficher la carte
-    map.afficherCarte();
-
-    // Créer un joueur
-    Joueur J;
-
-    std::cout << "Entrez une direction (z/s/q/d) ou 'a' pour quitter: ";
+    if (!glfwInit()) return -1;
 
     
-    while (true) {
-        //std::cout << "Entrez une direction (z/s/q/d) ou 'a' pour quitter: ";
-        //std::cin >> direction;
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+    // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    // #ifdef __APPLE__
+    // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    // #endif
 
-        char direction{getch()};
-        if (direction == 'a' || J.finduJeu()==1 || J.finduJeu()==2) {break;}
-        J.deplacer(direction,map);
-        map.afficherCarte();
-        // J.destruction(map);
-        // map.afficherCarte();
-    }
+    GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Carte OpenGL", NULL, NULL);
+    if (!window) { glfwTerminate(); return -1; }
+    glfwMakeContextCurrent(window);
+    gladLoadGL();
+
+    stbi_set_flip_vertically_on_load(1); // pour que les images soient orientées correctement
+
+    GLuint tex_mur = chargerTexture("../images/mur/mur.png");
+    GLuint tex_vide = chargerTexture("../images/vide/vide.png");
+    GLuint tex_gemme = chargerTexture("../images/gemme/gemme.png");
+    GLuint tex_ennemi = chargerTexture("../images/ennemi/ennemi.png");
+    GLuint tex_piege = chargerTexture("../images/piege/piege.png");
+
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // fond blanc
+    MapGenerator map(30, 30); // plus petit pour la démo graphique
+    map.genererCarte();
+    
 
     while (!glfwWindowShouldClose(window)) {
-
-        
+        glClear(GL_COLOR_BUFFER_BIT);
+        drawCarte(map, tex_mur, tex_vide, tex_gemme, tex_ennemi, tex_piege);
+        glfwSwapBuffers(window);
+        glfwPollEvents();
     }
+    glfwDestroyWindow(window);
     glfwTerminate();
-    
     return 0;
 }
-
-

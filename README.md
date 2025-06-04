@@ -26,3 +26,12 @@ obstacle: dune, ile... fausses, bateaux...
 ennemis: requins
 gemmes: piece d'or / trésor...
 joueur: plongeur (+: niveau d'O2 qui baisse)
+
+Pour l'instant ce que le code en C++ fait:
+
+Génération de la carte
+Placement des ennemis, pièges, gemmes
+Déplacement du joueur
+Déplacement automatique des ennemis vers le joueur (avec flow field)
+Détection et gestion de l’attaque des ennemis (la vie du joueur baisse bien si un ennemi arrive sur sa case)
+

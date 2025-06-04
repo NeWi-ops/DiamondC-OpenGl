@@ -1,11 +1,11 @@
 #include "MapGenerator.hpp"
-#include "Joueur.hpp"
 #include <iostream>
 #include <vector>
 #include <cstdlib>
 #include <ctime>
 #include <random>
 #include <algorithm>
+#include "Joueur.hpp"
 
 
 
@@ -16,9 +16,11 @@ MapGenerator::MapGenerator(int largeur, int hauteur)
 }
 
 std::pair<int, int>& MapGenerator::getPositionJoueur() { return m_positionJoueur; }
-std::vector<std::vector<int>>& MapGenerator::getCarte() { return m_carte; }
+const std::vector<std::vector<int>>& MapGenerator::getCarte() const { return m_carte; }
+std::vector<std::vector<int>>& MapGenerator::getCarte() {return m_carte;}
 int MapGenerator::getLargeur() const { return m_largeur; }
 int MapGenerator::getHauteur() const { return m_hauteur; }
+std::vector<std::pair<int, int>>& MapGenerator::getPositionEnnemis() {return m_positionEnnemis;}
 
 void MapGenerator::genererCarte() {
     std::srand(static_cast<unsigned int>(std::time(0)));
@@ -120,42 +122,104 @@ void MapGenerator::afficherCarte() const {
     }
     
         std::cout << "\n";
-       }
+}
 
-       void MapGenerator::trouverPointDeDepartJoueur() {
-        std::vector<std::pair<int, int> > vides = trouverCasesVides();
-        std::random_shuffle(vides.begin(), vides.end());
-    
-        for (const auto& pos : vides) {
-            int x = pos.first;
-            int y = pos.second;
-    
-            if (m_carte[y][x] == 0 && estAssezLoinDesEnnemis(x, y, 10)) {
-                m_positionJoueur = {x, y};
-                return;
-            }
-        }
-    
-        // Si aucun point ne respecte la contrainte, on prend le premier vide (fallback)
-        if (!vides.empty()) {
-            m_positionJoueur = vides[0];
-        } else {
-            m_positionJoueur = {0, 0};  // Aucun point valide trouvé
+void MapGenerator::trouverPointDeDepartJoueur() {
+    std::vector<std::pair<int, int> > vides = trouverCasesVides();
+    std::random_shuffle(vides.begin(), vides.end());
+
+    for (const auto& pos : vides) {
+        int x = pos.first;
+        int y = pos.second;
+
+        if (m_carte[y][x] == 0 && estAssezLoinDesEnnemis(x, y, 10)) {
+            m_positionJoueur = {x, y};
+            return;
         }
     }
+
+    // Si aucun point ne respecte la contrainte, on prend le premier vide (fallback)
+    if (!vides.empty()) {
+        m_positionJoueur = vides[0];
+    } else {
+        m_positionJoueur = {0, 0};  // Aucun point valide trouvé
+    }
+}
     
-    bool MapGenerator::estAssezLoinDesEnnemis(int x, int y, int distanceMin) const {
-        for (int j = 0; j < m_hauteur; ++j) {
-            for (int i = 0; i < m_largeur; ++i) {
-                if (m_carte[j][i] == 4) { // Ennemi
-                    int distance = abs(x - i) + abs(y - j);
-                    if (distance < distanceMin) {
-                        return false;
+bool MapGenerator::estAssezLoinDesEnnemis(int x, int y, int distanceMin) const {
+    for (int j = 0; j < m_hauteur; ++j) {
+        for (int i = 0; i < m_largeur; ++i) {
+            if (m_carte[j][i] == 4) { // Ennemi
+                int distance = abs(x - i) + abs(y - j);
+                if (distance < distanceMin) {
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+    
+void MapGenerator::deplacerEnnemis(const std::vector<std::vector<int>>& flow_field, Joueur& joueur) {
+    std::vector<std::vector<bool>> reservee(m_hauteur, std::vector<bool>(m_largeur, false));
+    for (auto& pos : m_positionEnnemis) {
+    int x = pos.first;
+    int y = pos.second;
+    int minDist = flow_field[y][x];
+    int bestX = x, bestY = y;
+    for (int dx : {-1, 0, 1}) {
+        for (int dy : {-1, 0, 1}) {
+            if (abs(dx) + abs(dy) != 1) continue;
+            int nx = x + dx, ny = y + dy;
+            if (nx >= 0 && nx < m_largeur && ny >= 0 && ny < m_hauteur) {
+                if (flow_field[ny][nx] != -1 && flow_field[ny][nx] < minDist && m_carte[ny][nx] == 0) {
+                    minDist = flow_field[ny][nx];
+                    bestX = nx;
+                    bestY = ny;
+                }
+            }
+        }
+    }
+    reservee[bestY][bestX] = true; //pour eviter que 2 ennemis soit sur la même case
+    if (bestX == m_positionJoueur.first && bestY == m_positionJoueur.second) {
+    joueur.vie--;
+    std::cout << "Le joueur est attaqué par un ennemi !" << std::endl;
+    }
+    // Met à jour la carte et la position
+    m_carte[y][x] = 0;
+    m_carte[bestY][bestX] = 4;
+    pos = {bestX, bestY};
+    }
+}
+
+std::vector<std::vector<int>> MapGenerator::generer_le_flow_field() {
+    auto& pos = m_positionJoueur;
+    int joueurX = pos.first;
+    int joueurY = pos.second;
+    int largeur = this->getLargeur();
+    int hauteur = this->getHauteur();
+    auto& carte = this->getCarte();
+
+    std::vector<std::vector<int>> distance(hauteur, std::vector<int>(largeur, -1));
+    std::queue<std::pair<int, int>> q;
+    q.push({joueurX, joueurY});
+    distance[joueurY][joueurX] = 0;
+
+    while (!q.empty()) {
+        auto [x, y] = q.front(); q.pop();
+        for (int dx : {-1, 0, 1}) {
+            for (int dy : {-1, 0, 1}) {
+                if (abs(dx) + abs(dy) != 1) continue; // 4 directions
+                int nx = x + dx, ny = y + dy;
+                if (nx >= 0 && nx < largeur && ny >= 0 && ny < hauteur) {
+                    if (carte[ny][nx] != 1 && distance[ny][nx] == -1) { // pas un mur
+                        distance[ny][nx] = distance[y][x] + 1;
+                        q.push({nx, ny});
                     }
                 }
             }
         }
-        return true;
     }
-    
+    return distance;
+}
 

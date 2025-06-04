@@ -10,89 +10,61 @@ set(CMAKE_CXX_STANDARD 11)
 include_directories(src)
 
 # Liste des fichiers sources
-set(SOURCES
-    src/main.cpp
+set(SOURCES_COMMON
+    
     src/MapGenerator.cpp
     src/Joueur.cpp
+    src/draw.cpp
     # Ajouter d'autres fichiers source nécessaires
 )
 
 # Crée l'exécutable du projet
-add_executable("main.cpp" ${SOURCES})
+#add_executable("main.cpp" ${SOURCES})
+# Version console
+add_executable(jeu_console src/main_console.cpp ${SOURCES_COMMON})
 
-include(FetchContent)
+# Version OpenGL
+add_executable(jeu_opengl src/main.cpp ${SOURCES_COMMON})
 
-# ---Add libraries---
 
-# ---GLFW---
-FetchContent_Declare(
-        glfw
-        GIT_REPOSITORY https://github.com/glfw/glfw
-)
+# Set the folder where the executable will be created
+set(OUTPUT_BIN_FOLDER ${CMAKE_SOURCE_DIR}/bin)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-FetchContent_GetProperties(glfw)
-if(NOT glfw_POPULATED)
-    FetchContent_Populate(glfw)
+# Librairies
 
-    # Disable some stuff we don't need
-    set(GLFW_BUILD_EXAMPLES OFF CACHE INTERNAL "Build the GLFW example programs")
-    set(GLFW_BUILD_TESTS OFF CACHE INTERNAL "Build the GLFW test programs")
-    set(GLFW_BUILD_DOCS OFF CACHE INTERNAL "Build the GLFW documentation")
-    set(GLFW_INSTALL OFF CACHE INTERNAL "Generate installation target")
+# ---Add GL---
+find_package(OpenGL REQUIRED)
+include_directories(${OPENGL_INCLUDE_DIR})
+include_directories(third_party)
+set(ALL_LIBRARIES ${OPENGL_LIBRARIES})
 
-    add_subdirectory(${glfw_SOURCE_DIR} ${glfw_BINARY_DIR})
-endif()
+# ---Add GLFW---
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE glfw)
+add_subdirectory(third_party/glfw)
+set(ALL_LIBRARIES ${ALL_LIBRARIES} glfw)
 
-# ---glad---
-FetchContent_Declare(
-        glad
-        GIT_REPOSITORY https://github.com/Dav1dde/glad.git
-)
+# ---Add glad---
+add_library(glad third_party/glad/src/glad.c)
+include_directories(third_party/glad/include)
+set(ALL_LIBRARIES ${ALL_LIBRARIES} glad)
 
-FetchContent_GetProperties(glad)
-if(NOT glad_POPULATED)
-    FetchContent_Populate(glad)
-    # Set some options for glad
-    set(GLAD_PROFILE "compatibility" CACHE STRING "OpenGL profile")
-    set(GLAD_API "gl=3.3" CACHE STRING "API type/version pairs, like \"gl=3.2,gles=\", no version means latest")
-    set(GLAD_GENERATOR "c" CACHE STRING "Language to generate the binding for")
-    add_subdirectory(${glad_SOURCE_DIR} ${glad_BINARY_DIR})
-endif()
+# ---Add glbasimac---
+add_subdirectory(third_party/glbasimac)
+set(ALL_LIBRARIES ${ALL_LIBRARIES} glbasimac)
+include_directories(third_party/glbasimac/)
+set(CMAKE_COLOR_MAKEFILE ON)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE glad)
+file(GLOB TD_DIRECTORIES "TD*")
 
-## ---glm---
-FetchContent_Declare(
-    glm
-    GIT_REPOSITORY https://github.com/g-truc/glm
-)
+foreach(TD ${TD_DIRECTORIES})
+    add_subdirectory(${TD})
+	get_filename_component(DIRN ${TD} NAME)
+    add_custom_target(${DIRN} COMMAND cd ${CMAKE_CURRENT_BINARY_DIR}/${DIRN} COMMAND make
+                WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${DIRN})
+endforeach()
 
-FetchContent_MakeAvailable(glm)
-target_link_libraries(${PROJECT_NAME} PRIVATE glm::glm)
-
-# ---img---
-FetchContent_Declare(
-    img
-    GIT_REPOSITORY https://github.com/CoolLibs/img
-    GIT_TAG da961a78b622db4f4b26df690b38ac3054e61806
-)
-
-FetchContent_MakeAvailable(img)
-target_link_libraries(${PROJECT_NAME} PRIVATE img::img)
-
-# ---simpleText--- (fork from https://github.com/podgorskiy/SimpleText)
-# Optional library for rendering text
-FetchContent_Declare(
-    simpletext
-    GIT_REPOSITORY https://github.com/dsmtE/SimpleText/
-)
-
-FetchContent_MakeAvailable(simpletext)
-
-# Create an interface library for simpletext
-add_library(simpletext INTERFACE)
-target_include_directories(simpletext SYSTEM INTERFACE ${simpletext_SOURCE_DIR}/include)
-
-target_link_libraries(${PROJECT_NAME} PRIVATE simpletext)
+target_link_libraries(jeu_opengl ${ALL_LIBRARIES})
