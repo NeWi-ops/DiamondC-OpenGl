@@ -1,6 +1,5 @@
 #include "lib/glbasimac/glad/include/glad/glad.h"
-#include "lib/img-main/include/img/img.hpp"
-
+#include <img/img.hpp>
 
 GLuint loadTexture(uint8_t const* data, int width, int height);
 
