@@ -1,7 +1,14 @@
-#include "lib/glbasimac/glad/include/glad/glad.h"
-#include <img/img.hpp>
+#pragma once
+#include "MapGenerator.hpp"
+#include <iostream>
+#include "stb_image.h"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include "Joueur.hpp"
 
-GLuint loadTexture(uint8_t const* data, int width, int height);
+
+GLuint chargerTexture(const char* filename);
+void drawCaseTexture(float xpos, float ypos, float cellWidth, float cellHeight, GLuint texture);
+void drawCarte(const MapGenerator& map, GLuint tex_mur, GLuint tex_vide, GLuint tex_gemme, GLuint tex_ennemi, GLuint tex_piege);
 
 
-void draw_quad_with_texture(GLuint textureId);

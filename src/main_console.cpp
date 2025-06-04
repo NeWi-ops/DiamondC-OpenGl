@@ -1,6 +1,5 @@
 #include "MapGenerator.hpp"
 #include "Joueur.hpp"
-#include "Enemis.hpp"
 #include <iostream>
 #include <stdio.h>
 #include <unistd.h>
