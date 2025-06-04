@@ -5,6 +5,7 @@
 #include "stb_image.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include "Joueur.hpp"
 
 
 GLuint chargerTexture(const char* filename);

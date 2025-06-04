@@ -39,6 +39,8 @@ void drawCarte(const MapGenerator& map, GLuint tex_mur, GLuint tex_vide, GLuint 
     int largeur = map.getLargeur();
     int hauteur = map.getHauteur();
 
+    
+
     float cellWidth = 2.0f / largeur;
     float cellHeight = 2.0f / hauteur;
 
