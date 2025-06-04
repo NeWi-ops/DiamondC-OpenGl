@@ -29,7 +29,7 @@ bool Joueur::deplacer(char direction, MapGenerator& map) {
         }
         else if (carte[nouvelleY][nouvelleX] == 1) {
             carte[nouvelleY][nouvelleX] = 0; //on détruit la case
-            return true; 
+            return false; 
         }
         else if (carte[nouvelleY][nouvelleX] == 2 || carte[nouvelleY][nouvelleX] == 4) {//on peut modifier pour que le score baisse + avec un piège ou l'inverse
             std::cout << "Vous avez trouvé un ennemi/... !" << std::endl;
@@ -38,7 +38,7 @@ bool Joueur::deplacer(char direction, MapGenerator& map) {
             pos.second = nouvelleY;
             Joueur::vie--;
             finduJeu();
-            return false; 
+            return true; 
         }
         else if (carte[nouvelleY][nouvelleX] == 3) {
             std::cout << "Vous avez trouvé une gemme !" << std::endl;
