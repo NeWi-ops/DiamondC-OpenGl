@@ -124,3 +124,13 @@ void drawCarte(const MapGenerator& map, GLuint tex_mur, GLuint tex_vide, GLuint 
         }
     }
 }
+
+void drawJoueur(float joueur_x, float joueur_y, float joueur_width, float joueur_height, GLuint tex_joueur) {
+        drawCaseTexture(
+            joueur_x - joueur_width / 2,
+            joueur_y - joueur_height / 2,
+            joueur_width,
+            joueur_height,
+            tex_joueur
+        );
+}
