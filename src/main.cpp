@@ -136,9 +136,9 @@ glfwSetMouseButtonCallback(window, [](GLFWwindow* w, int button, int action, int
 
     GLuint tex_mur = chargerTexture("../images/mur/Burger1.png");
     GLuint tex_vide = chargerTexture("../images/vide/Sol2.png");
-    GLuint tex_gemme = chargerTexture("../images/gemme/gemme.png");
+    GLuint tex_gemme = chargerTexture("../images/gemme/Scoobysnacks.png");
     GLuint tex_ennemi = chargerTexture("../images/ennemi/Fantome.png");
-    GLuint tex_piege = chargerTexture("../images/piege/piege.png");
+    GLuint tex_piege = chargerTexture("../images/piege/Trou.png");
     GLuint tex_joueur = chargerTexture("../images/joueur/ScoobydooDroite.png");
 
     Joueur J;
