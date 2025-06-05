@@ -97,40 +97,51 @@ void drawCarte(const MapGenerator& map, GLuint tex_mur, GLuint tex_vide, GLuint 
             // }
             if (val == 1) drawCaseTexture(xpos, ypos, cellWidth, cellHeight, tex_mur);//mur
             else if (val == 2) { //piege
-                float margin = 0.2;
-                drawCaseTexture(xpos + cellWidth * margin,
-                    ypos + cellHeight * margin,
-                    cellWidth * (1 - 2 * margin),
-                    cellHeight * (1 - 2 * margin),
+                float scale = 1.0f;
+                float offsetX = (cellWidth * scale - cellWidth) / 2.0f;
+                float offsetY = (cellHeight * scale - cellHeight) / 2.0f;
+                drawCaseTexture(xpos + cellWidth * scale,
+                    ypos + cellHeight * scale,
+                    cellWidth * (1 - 2 * scale),
+                    cellHeight * (1 - 2 * scale),
                     tex_piege);
             }
-            else if (val == 3) { //gemme
-                float margin = 0.2;
-                drawCaseTexture(xpos + cellWidth * margin,
-                    ypos + cellHeight * margin,
-                    cellWidth * (1 - 2 * margin),
-                    cellHeight * (1 - 2 * margin),
+            else if (val == 3) { // gemme
+                float scale = 1.0f;
+                float offsetX = (cellWidth * scale - cellWidth) / 2.0f;
+                float offsetY = (cellHeight * scale - cellHeight) / 2.0f;
+                drawCaseTexture(xpos - offsetX,
+                    ypos - offsetY,
+                    cellWidth * scale,
+                    cellHeight * scale,
                     tex_gemme);
             }
-            else if (val == 4) { //ennemi
-                float margin = 0.2;
-                drawCaseTexture(xpos + cellWidth * margin,
-                    ypos + cellHeight * margin,
-                    cellWidth * (1 - 2 * margin),
-                    cellHeight * (1 - 2 * margin),
+            else if (val == 4) { // ennemi
+                float scale = 1.0f;
+                float offsetX = (cellWidth * scale - cellWidth) / 2.0f;
+                float offsetY = (cellHeight * scale - cellHeight) / 2.0f;
+                drawCaseTexture(xpos - offsetX,
+                    ypos - offsetY,
+                    cellWidth * scale,
+                    cellHeight * scale,
                     tex_ennemi);
             }
+
             else drawCaseTexture(xpos, ypos, cellWidth, cellHeight, tex_vide);//vide
         }
     }
 }
 
 void drawJoueur(float joueur_x, float joueur_y, float joueur_width, float joueur_height, GLuint tex_joueur) {
-        drawCaseTexture(
-            joueur_x - joueur_width / 2,
-            joueur_y - joueur_height / 2,
-            joueur_width,
-            joueur_height,
-            tex_joueur
-        );
+    float scale = 1.5f;
+    float w = joueur_width * scale;
+    float h = joueur_height * scale;
+    drawCaseTexture(
+        joueur_x - w / 2,
+        joueur_y - h / 2,
+        w,
+        h,
+        tex_joueur
+);
+
 }
