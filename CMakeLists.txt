@@ -14,7 +14,7 @@ set(SOURCES_COMMON
     
     src/MapGenerator.cpp
     src/Joueur.cpp
-    src/draw.cpp
+    src/Draw.cpp
     src/Deplacement.cpp
     # Ajouter d'autres fichiers source nécessaires
 )

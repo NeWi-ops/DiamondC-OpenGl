@@ -18,7 +18,13 @@ public:
     int getHauteur() const;
     std::vector<std::pair<int, int>>& getPositionEnnemis();
     void deplacerEnnemis(const std::vector<std::vector<int>>& flow_field, Joueur& joueur);
+
+    //void deplacerEnnemis(const std::vector<std::vector<int>>& flow_field, Joueur& joueur, float delta);
     std::vector<std::vector<int>> generer_le_flow_field();
+    std::vector<std::pair<float, float>> m_positionEnnemisFloat;
+
+//const std::vector<std::pair<float, float>>& getPositionEnnemisFloat() const { return m_positionEnnemisFloat; };
+
 
 
 private:
@@ -33,6 +39,8 @@ private:
     void placerElements(int nb, int valeur);
     void trouverPointDeDepartJoueur();
     bool estAssezLoinDesEnnemis(int x, int y, int distanceMin) const;
+
+    std::vector<int> m_casesSousEnnemis;
     
 };
 

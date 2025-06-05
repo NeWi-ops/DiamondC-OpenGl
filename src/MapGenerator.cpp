@@ -98,6 +98,8 @@ void MapGenerator::placerElements(int nb, int valeur) {
         ++compteur;
         if(valeur == 4) { // Si c'est un ennemi, on stocke sa position
             m_positionEnnemis.push_back({x, y});
+            m_casesSousEnnemis.push_back(0); 
+            m_positionEnnemisFloat.push_back({float(x), float(y)});
         }
     }
 }
@@ -159,10 +161,60 @@ bool MapGenerator::estAssezLoinDesEnnemis(int x, int y, int distanceMin) const {
     }
     return true;
 }
+
+// void MapGenerator::deplacerEnnemis(const std::vector<std::vector<int>>& flow_field, Joueur& joueur) { //version premeire avec beug sur fils d ennemis
+//     std::vector<std::vector<bool>> reservee(m_hauteur, std::vector<bool>(m_largeur, false));
+//     for (size_t i = 0; i < m_positionEnnemis.size(); ++i) {
+//         auto& pos = m_positionEnnemis[i];
+//         int x = pos.first;
+//         int y = pos.second;
+//         int minDist = flow_field[y][x];
+//         int bestX = x, bestY = y;
+//         //int type_case = m_carte[y][x]; // sauvegarde le type de la case actuelle
+//         for (int dx : {-1, 0, 1}) {
+//             for (int dy : {-1, 0, 1}) {
+//                 if (abs(dx) + abs(dy) != 1) continue;
+            
+//                 int nx = x + dx, ny = y + dy;
+//                 if (nx >= 0 && nx < m_largeur && ny >= 0 && ny < m_hauteur) {
+//                     if (flow_field[ny][nx] != -1 && flow_field[ny][nx] < minDist && m_carte[ny][nx] != 1) {
+//                         minDist = flow_field[ny][nx];
+//                         bestX = nx;
+//                         bestY = ny;
+//                         //type_case = m_carte[y][x];
+//                     }
+//                 }
+//             }
+//         }
+//         reservee[bestY][bestX] = true; //pour eviter que 2 ennemis soit sur la même case
+//         if (bestX == m_positionJoueur.first && bestY == m_positionJoueur.second) {
+//             joueur.vie--;
+//             std::cout << "Le joueur est attaqué par un ennemi !" << std::endl;
+//             }
     
-void MapGenerator::deplacerEnnemis(const std::vector<std::vector<int>>& flow_field, Joueur& joueur) {
-    std::vector<std::vector<bool>> reservee(m_hauteur, std::vector<bool>(m_largeur, false));
-    for (auto& pos : m_positionEnnemis) {
+//         // Met à jour la carte et la position
+//         m_carte[y][x] = m_casesSousEnnemis[i];
+//         m_casesSousEnnemis[i] = m_carte[bestY][bestX];
+//         //type_case = m_carte[bestY][bestX]; // remet l'ancienne case
+//         m_carte[bestY][bestX] = 4;
+        
+//         pos = {bestX, bestY};
+//     }
+// }
+
+void MapGenerator::deplacerEnnemis(const std::vector<std::vector<int>>& flow_field, Joueur& joueur ) {
+    // Phase 1 : Calcul des déplacements
+std::vector<std::pair<int, int>> nouvellesPositions = m_positionEnnemis;
+std::vector<int> nouvellesCasesSousEnnemis = m_casesSousEnnemis;
+std::vector<std::vector<bool>> reservee(m_hauteur, std::vector<bool>(m_largeur, false));
+
+// Marquer les positions actuelles comme réservées (pour éviter qu'un ennemi "saute" sur un autre)
+for (const auto& pos : m_positionEnnemis) {
+    reservee[pos.second][pos.first] = true;
+}
+
+for (size_t i = 0; i < m_positionEnnemis.size(); ++i) {
+    auto& pos = m_positionEnnemis[i];
     int x = pos.first;
     int y = pos.second;
     int minDist = flow_field[y][x];
@@ -172,7 +224,8 @@ void MapGenerator::deplacerEnnemis(const std::vector<std::vector<int>>& flow_fie
             if (abs(dx) + abs(dy) != 1) continue;
             int nx = x + dx, ny = y + dy;
             if (nx >= 0 && nx < m_largeur && ny >= 0 && ny < m_hauteur) {
-                if (flow_field[ny][nx] != -1 && flow_field[ny][nx] < minDist && m_carte[ny][nx] == 0) {
+                // On ne va pas sur une case déjà réservée
+                if (!reservee[ny][nx] && flow_field[ny][nx] != -1 && flow_field[ny][nx] < minDist && m_carte[ny][nx] != 1) {
                     minDist = flow_field[ny][nx];
                     bestX = nx;
                     bestY = ny;
@@ -180,17 +233,205 @@ void MapGenerator::deplacerEnnemis(const std::vector<std::vector<int>>& flow_fie
             }
         }
     }
-    reservee[bestY][bestX] = true; //pour eviter que 2 ennemis soit sur la même case
+    
+    // Réserve la nouvelle case d'arrivée pour cet ennemi
+    reservee[bestY][bestX] = true;
+    nouvellesPositions[i] = {bestX, bestY};
+    nouvellesCasesSousEnnemis[i] = m_carte[bestY][bestX];
     if (bestX == m_positionJoueur.first && bestY == m_positionJoueur.second) {
-    joueur.vie--;
-    std::cout << "Le joueur est attaqué par un ennemi !" << std::endl;
-    }
-    // Met à jour la carte et la position
-    m_carte[y][x] = 0;
+            joueur.vie--;
+            std::cout << "Le joueur est attaqué par un ennemi !" << std::endl;
+            }
+}
+
+// Phase 2 : Application des déplacements
+// 1. Remettre les anciennes cases
+for (size_t i = 0; i < m_positionEnnemis.size(); ++i) {
+    int x = m_positionEnnemis[i].first;
+    int y = m_positionEnnemis[i].second;
+    m_carte[y][x] = m_casesSousEnnemis[i];
+}
+
+// 2. Placer les ennemis sur leurs nouvelles cases
+for (size_t i = 0; i < m_positionEnnemis.size(); ++i) {
+    int bestX = nouvellesPositions[i].first;
+    int bestY = nouvellesPositions[i].second;
+    m_casesSousEnnemis[i] = nouvellesCasesSousEnnemis[i];
     m_carte[bestY][bestX] = 4;
-    pos = {bestX, bestY};
+    m_positionEnnemis[i] = {bestX, bestY};
+}
+
+// 3. Nettoyage des "fantômes" d'ennemis
+for (int y = 0; y < m_hauteur; ++y) {
+    for (int x = 0; x < m_largeur; ++x) {
+        bool isEnnemi = false;
+        for (const auto& pos : m_positionEnnemis) {
+            if (pos.first == x && pos.second == y) {
+                isEnnemi = true;
+                break;
+            }
+        }
+        if (!isEnnemi && m_carte[y][x] == 4) {
+            m_carte[y][x] = 0; // ou m_casesSousEnnemis[...] si tu veux restaurer autre chose
+        }
     }
 }
+}
+
+// void MapGenerator::deplacerEnnemis(const std::vector<std::vector<int>>& flow_field, Joueur& joueur ,float delta) {
+//     // Phase 1 : Calcul des déplacements
+// std::vector<std::pair<int, int>> nouvellesPositions = m_positionEnnemis;
+// std::vector<int> nouvellesCasesSousEnnemis = m_casesSousEnnemis;
+// std::vector<std::vector<bool>> reservee(m_hauteur, std::vector<bool>(m_largeur, false));
+
+// for (const auto& pos : m_positionEnnemis) {
+//     reservee[pos.second][pos.first] = true;
+// }
+
+// float vitesse = 4.0f; // cases/seconde
+
+
+// for (size_t i = 0; i < m_positionEnnemis.size(); ++i) {
+//     auto& pos = m_positionEnnemis[i];
+//     int x = pos.first;
+//     int y = pos.second;
+//     int minDist = flow_field[y][x];
+//     int bestX = x, bestY = y;
+//     for (int dx : {-1, 0, 1}) {
+//         for (int dy : {-1, 0, 1}) {
+//             if (abs(dx) + abs(dy) != 1) continue;
+//             int nx = x + dx, ny = y + dy;
+//             if (nx >= 0 && nx < m_largeur && ny >= 0 && ny < m_hauteur) {
+//                 if (flow_field[ny][nx] != -1 && flow_field[ny][nx] < minDist && m_carte[ny][nx] != 1) {
+//                     minDist = flow_field[ny][nx];
+//                     bestX = nx;
+//                     bestY = ny;
+//                     m_positionEnnemisFloat[i].first += dx * vitesse * delta;
+//                     m_positionEnnemisFloat[i].second += dy * vitesse * delta;
+
+//                     // Si la moitié de la case suivante est franchie, mets à jour la position logique
+//                     int oldX = m_positionEnnemis[i].first;
+//                     int oldY = m_positionEnnemis[i].second;
+//                     int newX = int(m_positionEnnemisFloat[i].first + 0.5f);
+//                     int newY = int(m_positionEnnemisFloat[i].second + 0.5f);
+
+//                     if (newX != oldX || newY != oldY) {
+//                         // Mets à jour la grille et la position logique
+//                         // (utilise la même logique de sauvegarde/restauration de case que tu as déjà)
+//                         m_positionEnnemis[i] = {newX, newY};
+//                     }
+//                 }
+//             }
+//         }
+//     }
+
+//     reservee[bestY][bestX] = true;
+//     nouvellesPositions[i] = {bestX, bestY};
+//     nouvellesCasesSousEnnemis[i] = m_carte[bestY][bestX];
+    
+// }
+
+// // Phase 2 : Application des déplacements
+// // 1. Remettre les anciennes cases
+// for (size_t i = 0; i < m_positionEnnemis.size(); ++i) {
+//     int x = m_positionEnnemis[i].first;
+//     int y = m_positionEnnemis[i].second;
+//     m_carte[y][x] = m_casesSousEnnemis[i];
+// }
+
+// // 2. Placer les ennemis sur leurs nouvelles cases
+// for (size_t i = 0; i < m_positionEnnemis.size(); ++i) {
+//     int bestX = nouvellesPositions[i].first;
+//     int bestY = nouvellesPositions[i].second;
+//     m_casesSousEnnemis[i] = nouvellesCasesSousEnnemis[i];
+//     m_carte[bestY][bestX] = 4;
+//     m_positionEnnemis[i] = {bestX, bestY};
+// }
+
+// // 3. Nettoyage des "fantômes" d'ennemis
+// for (int y = 0; y < m_hauteur; ++y) {
+//     for (int x = 0; x < m_largeur; ++x) {
+//         bool isEnnemi = false;
+//         for (const auto& pos : m_positionEnnemis) {
+//             if (pos.first == x && pos.second == y) {
+//                 isEnnemi = true;
+//                 break;
+//             }
+//         }
+//         if (!isEnnemi && m_carte[y][x] == 4) {
+//             m_carte[y][x] = 0; // ou m_casesSousEnnemis[...] si tu veux restaurer autre chose
+//         }
+//     }
+// }
+// }
+
+// void MapGenerator::deplacerEnnemis(const std::vector<std::vector<int>>& flow_field, Joueur& joueur, float delta) {
+//     std::vector<std::pair<int, int>> nouvellesPositions = m_positionEnnemis;
+//     std::vector<int> nouvellesCasesSousEnnemis = m_casesSousEnnemis;
+//     std::vector<std::vector<bool>> reservee(m_hauteur, std::vector<bool>(m_largeur, false));
+
+//     for (const auto& pos : m_positionEnnemis) {
+//         reservee[pos.second][pos.first] = true;
+//     }
+
+//     float vitesse = 25.0f; // cases/seconde
+
+//     for (size_t i = 0; i < m_positionEnnemis.size(); ++i) {
+//         auto& pos = m_positionEnnemis[i];
+//         int x = pos.first;
+//         int y = pos.second;
+//         int minDist = flow_field[y][x];
+//         int bestX = x, bestY = y;
+//         int dx = 0, dy = 0;
+
+//         // Recherche la meilleure direction
+//         for (int ddx : {-1, 0, 1}) {
+//             for (int ddy : {-1, 0, 1}) {
+//                 if (abs(ddx) + abs(ddy) != 1) continue;
+//                 int nx = x + ddx, ny = y + ddy;
+//                 if (nx >= 0 && nx < m_largeur && ny >= 0 && ny < m_hauteur) {
+//                     if (flow_field[ny][nx] != -1 && flow_field[ny][nx] < minDist && m_carte[ny][nx] != 1 && !reservee[ny][nx]) {
+//                         minDist = flow_field[ny][nx];
+//                         bestX = nx;
+//                         bestY = ny;
+//                         dx = ddx;
+//                         dy = ddy;
+//                     }
+//                 }
+//             }
+//         }
+
+//         // Déplacement fluide
+//         m_positionEnnemisFloat[i].first += dx * vitesse * delta;
+//         m_positionEnnemisFloat[i].second += dy * vitesse * delta;
+
+//         int oldX = m_positionEnnemis[i].first;
+//         int oldY = m_positionEnnemis[i].second;
+//         int newX = int(m_positionEnnemisFloat[i].first + 0.5f);
+//         int newY = int(m_positionEnnemisFloat[i].second + 0.5f);
+
+//         if ((newX != oldX || newY != oldY) && newX >= 0 && newX < m_largeur && newY >= 0 && newY < m_hauteur) {
+//             // Phase 1 : sauvegarde la case d'arrivée
+//             int caseArrivee = m_carte[newY][newX];
+
+//             // Phase 2 : remet la case quittée à sa valeur d'origine
+//             m_carte[oldY][oldX] = m_casesSousEnnemis[i];
+
+//             // Phase 3 : place l'ennemi sur la nouvelle case
+//             m_casesSousEnnemis[i] = caseArrivee;
+//             m_carte[newY][newX] = 4;
+//             m_positionEnnemis[i] = {newX, newY};
+//             reservee[newY][newX] = true;
+
+//             // Si le joueur est touché
+//             if (newX == m_positionJoueur.first && newY == m_positionJoueur.second) {
+//                 joueur.vie--;
+//                 std::cout << "Le joueur est attaqué par un ennemi !" << std::endl;
+//             }
+//         }
+//     }
+// }
+
 
 std::vector<std::vector<int>> MapGenerator::generer_le_flow_field() {
     auto& pos = m_positionJoueur;
@@ -222,4 +463,5 @@ std::vector<std::vector<int>> MapGenerator::generer_le_flow_field() {
     }
     return distance;
 }
+
 

@@ -6,7 +6,7 @@
 // #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 //#include "tools/texture.hpp"
-#include "draw.hpp"
+#include "Draw.hpp"
 #include "Deplacement.hpp"
 
 
@@ -179,6 +179,7 @@ glfwSetMouseButtonCallback(window, [](GLFWwindow* w, int button, int action, int
 
         ennemi_timer += delta;
         if (ennemi_timer >= ennemi_interval) {
+            //map.deplacerEnnemis(map.generer_le_flow_field(), J, delta);
             map.deplacerEnnemis(map.generer_le_flow_field(), J);
             ennemi_timer = 0.0f;
         }
@@ -188,7 +189,7 @@ glfwSetMouseButtonCallback(window, [](GLFWwindow* w, int button, int action, int
         
         gererDeplacementJoueur(map , window, joueur_x_case, joueur_y_case, vitesse, delta);
 
-        gererCollisionEtLogique(joueur_x_case,joueur_y_case,joueur_case_x, joueur_case_y, J, map);
+        gererCollisionEtLogique(joueur_x_case,joueur_y_case,joueur_case_x, joueur_case_y, J, map, window);
 
         // Conversion en coordonnées OpenGL
         // float cellWidth = 2.0f / map.getLargeur();
