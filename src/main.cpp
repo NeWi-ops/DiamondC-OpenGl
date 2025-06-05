@@ -134,12 +134,12 @@ glfwSetMouseButtonCallback(window, [](GLFWwindow* w, int button, int action, int
         glfwPollEvents();
     }
 
-    GLuint tex_mur = chargerTexture("../images/mur/mur.png");
-    GLuint tex_vide = chargerTexture("../images/vide/vide.png");
+    GLuint tex_mur = chargerTexture("../images/mur/Burger1.png");
+    GLuint tex_vide = chargerTexture("../images/vide/Sol2.png");
     GLuint tex_gemme = chargerTexture("../images/gemme/gemme.png");
-    GLuint tex_ennemi = chargerTexture("../images/ennemi/ennemi.png");
+    GLuint tex_ennemi = chargerTexture("../images/ennemi/Fantome.png");
     GLuint tex_piege = chargerTexture("../images/piege/piege.png");
-    GLuint tex_joueur = chargerTexture("../images/joueur/joueur.png");
+    GLuint tex_joueur = chargerTexture("../images/joueur/ScoobydooDroite.png");
 
     Joueur J;
 
