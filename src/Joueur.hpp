@@ -10,7 +10,6 @@ public:
     int vie{3};
     int score{0};
     bool deplacer(char direction, MapGenerator& map);
-    //void destruction(MapGenerator& map);
     int finduJeu();
     void gemmeTrouvee();
     

@@ -23,7 +23,7 @@ public:
     std::vector<std::vector<int>> generer_le_flow_field();
     std::vector<std::pair<float, float>> m_positionEnnemisFloat;
 
-//const std::vector<std::pair<float, float>>& getPositionEnnemisFloat() const { return m_positionEnnemisFloat; };
+    //const std::vector<std::pair<float, float>>& getPositionEnnemisFloat() const { return m_positionEnnemisFloat; };
 
 
 

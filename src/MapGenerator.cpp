@@ -162,45 +162,6 @@ bool MapGenerator::estAssezLoinDesEnnemis(int x, int y, int distanceMin) const {
     return true;
 }
 
-// void MapGenerator::deplacerEnnemis(const std::vector<std::vector<int>>& flow_field, Joueur& joueur) { //version premeire avec beug sur fils d ennemis
-//     std::vector<std::vector<bool>> reservee(m_hauteur, std::vector<bool>(m_largeur, false));
-//     for (size_t i = 0; i < m_positionEnnemis.size(); ++i) {
-//         auto& pos = m_positionEnnemis[i];
-//         int x = pos.first;
-//         int y = pos.second;
-//         int minDist = flow_field[y][x];
-//         int bestX = x, bestY = y;
-//         //int type_case = m_carte[y][x]; // sauvegarde le type de la case actuelle
-//         for (int dx : {-1, 0, 1}) {
-//             for (int dy : {-1, 0, 1}) {
-//                 if (abs(dx) + abs(dy) != 1) continue;
-            
-//                 int nx = x + dx, ny = y + dy;
-//                 if (nx >= 0 && nx < m_largeur && ny >= 0 && ny < m_hauteur) {
-//                     if (flow_field[ny][nx] != -1 && flow_field[ny][nx] < minDist && m_carte[ny][nx] != 1) {
-//                         minDist = flow_field[ny][nx];
-//                         bestX = nx;
-//                         bestY = ny;
-//                         //type_case = m_carte[y][x];
-//                     }
-//                 }
-//             }
-//         }
-//         reservee[bestY][bestX] = true; //pour eviter que 2 ennemis soit sur la même case
-//         if (bestX == m_positionJoueur.first && bestY == m_positionJoueur.second) {
-//             joueur.vie--;
-//             std::cout << "Le joueur est attaqué par un ennemi !" << std::endl;
-//             }
-    
-//         // Met à jour la carte et la position
-//         m_carte[y][x] = m_casesSousEnnemis[i];
-//         m_casesSousEnnemis[i] = m_carte[bestY][bestX];
-//         //type_case = m_carte[bestY][bestX]; // remet l'ancienne case
-//         m_carte[bestY][bestX] = 4;
-        
-//         pos = {bestX, bestY};
-//     }
-// }
 
 void MapGenerator::deplacerEnnemis(const std::vector<std::vector<int>>& flow_field, Joueur& joueur ) {
     // Phase 1 : Calcul des déplacements

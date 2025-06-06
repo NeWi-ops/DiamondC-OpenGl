@@ -16,6 +16,7 @@ set(SOURCES_COMMON
     src/Joueur.cpp
     src/Draw.cpp
     src/Deplacement.cpp
+    src/Run.cpp
     # Ajouter d'autres fichiers source nécessaires
 )
 

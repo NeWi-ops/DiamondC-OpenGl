@@ -50,7 +50,6 @@ int main() {
         J.deplacer(direction,map);
         
         map.afficherCarte();
-        // J.destruction(map);
         // map.afficherCarte();
     }
     // while (true) {

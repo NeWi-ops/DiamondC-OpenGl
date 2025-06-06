@@ -55,10 +55,10 @@ void gererCollisionEtLogique(float& joueur_x_case_f, float& joueur_y_case_f, int
             }
              else {
                 // Bloque le déplacement
-                if (new_case_x > joueur_case_x) joueur_x_case_f = joueur_case_x + 0.99f;
-                else if (new_case_x < joueur_case_x) joueur_x_case_f = joueur_case_x ;
-                if (new_case_y > joueur_case_y) joueur_y_case_f = joueur_case_y + 0.99f;
-                else if (new_case_y < joueur_case_y) joueur_y_case_f = joueur_case_y ;
+                if (new_case_x > joueur_case_x) joueur_x_case_f = joueur_case_x + 0.5f;
+                else if (new_case_x < joueur_case_x) joueur_x_case_f = joueur_case_x  - 0.5f;
+                if (new_case_y > joueur_case_y) joueur_y_case_f = joueur_case_y + 0.5f;
+                else if (new_case_y < joueur_case_y) joueur_y_case_f = joueur_case_y - 0.5f;
                 return;
             }
         }

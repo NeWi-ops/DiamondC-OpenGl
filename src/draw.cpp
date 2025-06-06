@@ -1,6 +1,6 @@
 #include "draw.hpp"
 #define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include "glbasimac/tools/stb_image.h"
 
 
 // Charge une image et crée une texture OpenGL
@@ -21,6 +21,19 @@ GLuint chargerTexture(const char* filename) {
     return texture;
 }
 
+void drawFullScreenTexture(GLuint texture) {
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+    glBegin(GL_QUADS);
+        glTexCoord2f(0, 1); glVertex2f(-1.0f,  1.0f);
+        glTexCoord2f(0, 0); glVertex2f(-1.0f, -1.0f);
+        glTexCoord2f(1, 0); glVertex2f( 1.0f, -1.0f);
+        glTexCoord2f(1, 1); glVertex2f( 1.0f,  1.0f);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+}
+
 void drawCaseTexture(float xpos, float ypos, float cellWidth, float cellHeight, GLuint texture) {
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, texture);
@@ -32,6 +45,46 @@ void drawCaseTexture(float xpos, float ypos, float cellWidth, float cellHeight, 
     glTexCoord2f(0,1); glVertex2f(xpos, ypos + cellHeight);
     glEnd();
     glDisable(GL_TEXTURE_2D);
+}
+
+void afficherAccueil(GLFWwindow* window, GLuint tex_accueil) {
+    clicValide = false;
+    while (!glfwWindowShouldClose(window) && !clicValide) {
+        // glClear(GL_COLOR_BUFFER_BIT);
+
+        // glEnable(GL_TEXTURE_2D);
+        // glBindTexture(GL_TEXTURE_2D, tex_accueil);
+        // glBegin(GL_QUADS);
+        //     glTexCoord2f(0, 1); glVertex2f(-1,  1);
+        //     glTexCoord2f(0, 0); glVertex2f(-1, -1);
+        //     glTexCoord2f(1, 0); glVertex2f( 1, -1);
+        //     glTexCoord2f(1, 1); glVertex2f( 1,  1);
+        // glEnd();
+        // glDisable(GL_TEXTURE_2D);
+        drawFullScreenTexture(tex_accueil);
+
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+}
+
+void afficherEcranFin(GLFWwindow* window, GLuint texture_fin) {
+    while (!glfwWindowShouldClose(window)) {
+        glClear(GL_COLOR_BUFFER_BIT);
+        drawFullScreenTexture(texture_fin);
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+
+        // Appuyer sur Espace ou Entrée pour relancer ou revenir à l'accueil
+        if (glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS ||
+            glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+            break;
+        }
+        // Quitter si clic gauche souris
+        if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+            break;
+        }
+    }
 }
 
 void drawCarte(const MapGenerator& map, GLuint tex_mur, GLuint tex_vide, GLuint tex_gemme, GLuint tex_ennemi, GLuint tex_piege) {
@@ -51,50 +104,7 @@ void drawCarte(const MapGenerator& map, GLuint tex_mur, GLuint tex_vide, GLuint 
             float xpos = -1.0f + x * cellWidth;
             float ypos = -1.0f + y * cellHeight;
 
-            // Cases vides (blanc) ou murs (noir)
-            // if (val == 1) glColor3f(0.0f, 0.0f, 0.0f); // mur noir
-            // else glColor3f(1.0f, 1.0f, 1.0f); // vide blanc
-
-            // glBegin(GL_QUADS);
-            // glVertex2f(xpos, ypos);
-            // glVertex2f(xpos + cellWidth, ypos);
-            // glVertex2f(xpos + cellWidth, ypos + cellHeight);
-            // glVertex2f(xpos, ypos + cellHeight);
-            // glEnd();
-
-            // // piège (petit carré bleu)
-            // if (val == 2) {
-            //     glColor3f(0.0f, 0.0f, 1.0f);
-            //     float margin = 0.2f;
-            //     glBegin(GL_QUADS);
-            //     glVertex2f(xpos + cellWidth * margin, ypos + cellHeight * margin);
-            //     glVertex2f(xpos + cellWidth * (1 - margin), ypos + cellHeight * margin);
-            //     glVertex2f(xpos + cellWidth * (1 - margin), ypos + cellHeight * (1 - margin));
-            //     glVertex2f(xpos + cellWidth * margin, ypos + cellHeight * (1 - margin));
-            //     glEnd();
-            // }
-
-            // // Ennemi (petit carré rouge)
-            // if (val == 4) {
-            //     glColor3f(1.0f, 0.0f, 0.0f);
-            //     float margin = 0.2f;
-            //     glBegin(GL_QUADS);
-            //     glVertex2f(xpos + cellWidth * margin, ypos + cellHeight * margin);
-            //     glVertex2f(xpos + cellWidth * (1 - margin), ypos + cellHeight * margin);
-            //     glVertex2f(xpos + cellWidth * (1 - margin), ypos + cellHeight * (1 - margin));
-            //     glVertex2f(xpos + cellWidth * margin, ypos + cellHeight * (1 - margin));
-            //     glEnd();
-            // }
-            // if (val == 3) { // Gemme (petit carré jaune)
-            //     glColor3f(1.0f, 1.0f, 0.0f);
-            //     float margin = 0.2f;
-            //     glBegin(GL_QUADS);
-            //     glVertex2f(xpos + cellWidth * margin, ypos + cellHeight * margin);
-            //     glVertex2f(xpos + cellWidth * (1 - margin), ypos + cellHeight * margin);
-            //     glVertex2f(xpos + cellWidth * (1 - margin), ypos + cellHeight * (1 - margin));
-            //     glVertex2f(xpos + cellWidth * margin, ypos + cellHeight * (1 - margin));
-            //     glEnd();
-            // }
+            
             if (val == 1) drawCaseTexture(xpos, ypos, cellWidth, cellHeight, tex_mur);//mur
             else if (val == 2) { //piege
                 float scale = 1.0f;
@@ -143,3 +153,4 @@ void drawJoueur(float joueur_x, float joueur_y, float joueur_width, float joueur
         tex_joueur
 );
 }
+

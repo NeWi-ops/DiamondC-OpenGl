@@ -53,13 +53,6 @@ bool Joueur::deplacer(char direction, MapGenerator& map) {
     return false; 
 }
 
-// void Joueur::destruction(MapGenerator& map) {
-//     auto& pos = map.getPositionJoueur();
-//     if(pos.first == 1 && pos.second == 1) {
-//         map.getCarte()[pos.second][pos.first] = 0; // On détruit la case
-//     }
-// }
-
 int Joueur::finduJeu(){ //si le retour est true, on affiche une image de victoire, si false, une image de défaite
     if (Joueur::gemme==10 && Joueur::vie > 0) {
         std::cout << "Vous avez gagné ! Votre score est de " << Joueur::score << "." << std::endl;
