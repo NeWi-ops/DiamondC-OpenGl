@@ -50,25 +50,18 @@ void drawCaseTexture(float xpos, float ypos, float cellWidth, float cellHeight, 
 void afficherAccueil(GLFWwindow* window, GLuint tex_accueil) {
     clicValide = false;
     while (!glfwWindowShouldClose(window) && !clicValide) {
-        // glClear(GL_COLOR_BUFFER_BIT);
-
-        // glEnable(GL_TEXTURE_2D);
-        // glBindTexture(GL_TEXTURE_2D, tex_accueil);
-        // glBegin(GL_QUADS);
-        //     glTexCoord2f(0, 1); glVertex2f(-1,  1);
-        //     glTexCoord2f(0, 0); glVertex2f(-1, -1);
-        //     glTexCoord2f(1, 0); glVertex2f( 1, -1);
-        //     glTexCoord2f(1, 1); glVertex2f( 1,  1);
-        // glEnd();
-        // glDisable(GL_TEXTURE_2D);
         drawFullScreenTexture(tex_accueil);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
+
+        if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+            break;
+        }
     }
 }
 
-void afficherEcranFin(GLFWwindow* window, GLuint texture_fin) {
+int afficherEcranFin(GLFWwindow* window, GLuint texture_fin) {
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
         drawFullScreenTexture(texture_fin);
@@ -78,11 +71,14 @@ void afficherEcranFin(GLFWwindow* window, GLuint texture_fin) {
         // Appuyer sur Espace ou Entrée pour relancer ou revenir à l'accueil
         if (glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS ||
             glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-            break;
+            return 1; // Relancer le jeu
         }
         // Quitter si clic gauche souris
         if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
-            break;
+            return 1;;
+        }
+        if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+            return 0; // Quitter le jeu
         }
     }
 }

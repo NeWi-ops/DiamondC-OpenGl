@@ -36,14 +36,14 @@ void runGame(GLFWwindow* window, MapGenerator& map, Joueur& J, GLuint tex_mur, G
 
         if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) break;
         if (J.finduJeu() == 2) {
-            afficherEcranFin(window, tex_defaite);
-            afficherAccueil(window, tex_accueil); 
-            break; 
+            if (afficherEcranFin(window, tex_victoire) == 1) {afficherAccueil(window, tex_accueil);}
+                
+            else break;
         }
         if (J.finduJeu() == 1) {
-                afficherEcranFin(window, tex_victoire);
-                afficherAccueil(window, tex_accueil); 
-                break;
+            if (afficherEcranFin(window, tex_victoire) == 1) {afficherAccueil(window, tex_accueil);}
+                
+            else break;
         }
         
         gererDeplacementJoueur(map , window, joueur_x_case_f, joueur_y_case_f, vitesse, delta);

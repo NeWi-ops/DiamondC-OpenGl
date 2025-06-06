@@ -68,7 +68,7 @@ int main() {
     
     // Ici la boucle d'attente clic sur accueil (affiche la texture accueil)
     afficherAccueil(window, tex_accueil);
-
+    
 
 
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // fond blanc
